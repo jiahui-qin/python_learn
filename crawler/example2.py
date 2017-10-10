@@ -6,9 +6,10 @@
 ##http://cuiqingcai.com/1319.html
 
 ##爬糗事百科前十页的内容
+# -*- coding: utf-8 -*-
 from urllib import request
 from bs4 import BeautifulSoup
-for i in range(1,10):
+for i in range(1,2):
     url=request.Request("http://www.qiushibaike.com/hot/page/"+str(i)+"/")
     url.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.')
     with request.urlopen(url) as f:
@@ -17,6 +18,14 @@ for i in range(1,10):
         #items = re.findall(pattern,data) #失败的正则表达式尝试
         soup = BeautifulSoup(data, 'html.parser')
         #print(soup.prettify())
-        for i in soup.find_all("a",class_="contentHerf"):
-            print(i.get_text(strip=True)) #用get_text方法可以提取当前tag包括子孙tag中的text内容
-            print()
+        for i in soup.find_all("div",class_="article block untagged mb15 typs_hot"):
+            with open('E:/code/python_learn/crawler/test.txt','a') as file_p:
+                for j in i.find_all('a',class_="contentHerf"):
+                    file_p.write(j.get_text(strip=True))
+                    file_p.write('\n')
+                for k in i.find_all('img',class_="illustration"):
+                    file_p.write('![](')
+                    file_p.write(k['src'])
+                    file_p.write(')')
+                    file_p.write('\n')
+                file_p.write('\n')
