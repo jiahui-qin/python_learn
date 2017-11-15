@@ -2,6 +2,7 @@ from urllib import request
 from bs4 import BeautifulSoup
 from time import sleep
 import re
+import gzip
 
 def movieinfo(url):
     data = request.Request(url)
@@ -34,7 +35,9 @@ def moviedownload(idcode):
     Dowpage.add_header('Accept-Language', 'zh-CN,zh;q=0.8')
 
     with request.urlopen(Dowpage) as dpage:
-        dpage = dpage.read().decode('utf-8')
+        dpage = dpage.read()
+        dpage = gzip.decompress(dpage)
+        dpage = dpage.decode('utf-8')
         dsoup = BeautifulSoup(dpage, 'html.parser')
         flag = dsoup.find('div', text = "Torrent Description")
         if flag:
@@ -43,9 +46,9 @@ def moviedownload(idcode):
             print("btso暂无" + idcode + '下载地址')
 
         
-data = request.Request("https://avmo.club/cn/search/VENUS/page/3")
+data = request.Request("https://avmo.club/cn/page/8")
 data.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36')
-data.add_header('Referer','https://avmo.club/cn')
+data.add_header('Referer','https://avmo.club/cn/page/8')
 data.add_header('Upgrade-Insecure-Requests',1)
 with request.urlopen(data) as f:
     data=f.read().decode('utf-8')
@@ -57,4 +60,5 @@ with request.urlopen(data) as f:
         #print(movie.parent.parent.a['href'])
         movieinfo(movie.parent.parent.a['href'])
         print()
+        sleep(1)
 
