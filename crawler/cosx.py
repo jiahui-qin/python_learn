@@ -33,6 +33,7 @@ def openli(data):
             result.append(list(map(str,line.split(','))))
         results = result[0]
 
+<<<<<<< HEAD
     for article in results:
         if re.match(r'.\d\d\d\d', article[2:-1]):
             article_url = 'https://cosx.org'+article[2:-1]
@@ -44,4 +45,18 @@ def openli(data):
                 cosx_soup = BeautifulSoup(cosx, 'html.parser')
                 cosx_main = cosx_soup.find_all('main')
                 print(cosx_main)
+=======
+def openli(artcles):
+    for artcle in artcles:
+        if re.match(r'\d\d\d\d',artcle):
+            art_url = request.Request('https://cosx.org' + artcle)
+            print(art_url)
+            art_url.add_header('Refer','https://cosx.org' + artcle)
+            art_url.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36')
+            art_u = request.urlopen(art_url)
+            art_u = art_u.read().decode('utf-8')
+            print(art_u)
+    
+openli('/2017/09/interview-sanzhen-liu/')
+>>>>>>> e136cfa716ceebb1960bf2898279be1df2482071
 
