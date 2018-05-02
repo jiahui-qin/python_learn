@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 import time
 import os
+import hashlib
 def saveacfun(turl):
     url = request.Request(turl)
     url.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36')
@@ -41,6 +42,7 @@ def checkacfun(turl):
         #    print(article.get_text(strip=True))
         acno = turl.split('/')[4]
         acname = acno + '.txt'
+        print(acname)
         with open(acname, 'r') as savefile:
             print(savefile.read())
             print(articles.get_text(strip=True))
@@ -48,5 +50,5 @@ def checkacfun(turl):
                 return('TRUE')
             else:
                 return('FALSE')
-
+saveacfun('http://www.acfun.cn/a/ac4272476')
 print(checkacfun('http://www.acfun.cn/a/ac4272476'))
