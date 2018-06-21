@@ -4,22 +4,24 @@ from time import sleep
 import re
 import gzip
 def movieinfo():
-    data = request.Request('https://javlog.com/cn/actresses/page/3')
-    data.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36')
-    data.add_header('Upgrade-Insecure-Requests',1)
-    with request.urlopen(data) as f:
-        data=f.read().decode('utf-8')
-        soup = BeautifulSoup(data, 'html.parser')
-        actors = soup.find_all('div', class_ = 'item')
-        for actor in actors:
-            link = actor.find('img')['src']
-            actor = actor.find('div', class_ = "photo-info").get_text("|", strip=True)
-            filename = 'av_actress/photo/' + actor + '.jpg'
-            download(link, filename)
+    for i in range(1,207):
+        url = 'https://javlog.com/cn/actresses/page/' + str(i)
+        data = request.Request(url)
+        data.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36')
+        data.add_header('Upgrade-Insecure-Requests',1)
+        with request.urlopen(data) as f:
+            data=f.read().decode('utf-8')
+            soup = BeautifulSoup(data, 'html.parser')
+            actors = soup.find_all('div', class_ = 'item')
+            for actor in actors:
+                link = actor.find('img')['src']
+                actor = actor.find('div', class_ = "photo-info").get_text("|", strip=True)
+                filename = 'av_actress/photo/' + actor + '.jpg'
+                download(link, filename)
 
 
-def download(url, name):#下载函数  
-    if(url==None):#地址若为None则跳过  
+def download(url, name):
+    if(url==None):
         pass
     photourl = request.Request(url)
     photourl.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36')
