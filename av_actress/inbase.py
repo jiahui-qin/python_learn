@@ -22,7 +22,7 @@ def gettoken():
 
 request_url = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/add"
 id = 'kaori3'
-params = [ { 'image' : 'https://jp.netcdn.space/mono/actjpgs/kaori3.jpg', 'image_type' : 'URL', 'group_id' : 'actor',  'user_id' : 'kaori3','quality_control' : 'LOW' ,'liveness_control':'NONE'} ]
+params = [ { 'user_id':'kaori3', 'image' : 'https://jp.netcdn.space/mono/actjpgs/kaori3.jpg', 'image_type' : 'URL', 'group_id' : 'actor',  'quality_control' : 'LOW' ,'liveness_control':'NONE'} ]
 params = json.dumps(params)
 access_token = '24.c730d358b20be8063324b95c91a00c68.2592000.1532180467.282335-11422493'
 request_url = request_url + "?access_token=" + access_token
